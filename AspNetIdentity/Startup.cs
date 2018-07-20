@@ -1,4 +1,7 @@
 ﻿using AspNetIdentity.Infrastructure;
+using AspNetIdentity.Providers;
+using Microsoft.Owin;
+using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using System;
@@ -32,7 +35,18 @@ namespace AspNetIdentity
         {
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-        }
+            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            {
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/oauth/token"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                Provider = new CustomOAuthProvider(),
+                AccessTokenFormat = new CustomJwtFormat("http://localhost:31405")
+            };
 
+            app.UseOAuthAuthorizationServer(OAuthServerOptions);
+        }
     }
+
+    
 }

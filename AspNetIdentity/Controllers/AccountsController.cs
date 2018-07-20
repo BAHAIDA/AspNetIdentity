@@ -76,7 +76,7 @@ namespace AspNetIdentity.Controllers
 
             var callbackUrl = new Uri(Url.Link("ConfirmEmailRoute", new { userId = user.Id, code = code }));
 
-            await this.AppUserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+            this.AppUserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
             Uri locationHeader = new Uri(Url.Link("GetUserById", new { id = user.Id }));
 
@@ -121,29 +121,29 @@ namespace AspNetIdentity.Controllers
 
             return Ok();
         }
-        [Route("user/{id:guid}")]
+         [Route("user/{id:guid}")]
         public async Task<IHttpActionResult> DeleteUser(string id)
         {
-
+ 
             //Only SuperAdmin or Admin can delete users (Later when implement roles)
-
+ 
             var appUser = await this.AppUserManager.FindByIdAsync(id);
-
+ 
             if (appUser != null)
             {
                 IdentityResult result = await this.AppUserManager.DeleteAsync(appUser);
-
+ 
                 if (!result.Succeeded)
                 {
                     return GetErrorResult(result);
                 }
-
+ 
                 return Ok();
-
+ 
             }
-
+ 
             return NotFound();
-
+          
         }
     }
     

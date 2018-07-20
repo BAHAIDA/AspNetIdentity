@@ -23,7 +23,7 @@ namespace AspNetIdentity.Services
             var myMessage = new SendGridMessage();
 
             myMessage.AddTo(message.Destination);
-            myMessage.From = new System.Net.Mail.MailAddress("abahaida@pca.ma", "Aabir BAHAIDA");
+            myMessage.From = new System.Net.Mail.MailAddress("aabir.bahaida@gmail.com", "Aabir BAHAIDA");
             myMessage.Subject = message.Subject;
             myMessage.Text = message.Body;
             myMessage.Html = message.Body;
